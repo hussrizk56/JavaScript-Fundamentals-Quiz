@@ -2,7 +2,7 @@
 var questions = [
     {
         question: "Commonly used data types DO NOT include:",
-        choices: ["1. Strings", "2. Booleans", "3. Alerts", "4. Numbers"],
+        choices: ["Strings", "Booleans", "Alerts", "Numbers"],
         answer: "Alerts"
     },
     {
@@ -41,3 +41,41 @@ var card = document.querySelector("#card");
 var startingTime = 75;
 var timer = 0;
 var wrongAnswer = 10;
+
+// Varabile for creating an element not currently in existing HTML. 
+var createList = document.createElement("ul");
+
+// Timer function to display on screen and count down. 
+startGame.addEventListener("click", function() {
+    if (timer === 0) {
+        timer = setInterval(function() {
+            startingTime--;
+            timeLeft.textContent = "Seconds Left: " + startingTime;
+
+            if (startingTime <= 0) {
+                clearInterval(timer);
+                gameOver();
+                timeLeft.textContent = "Time Over!"
+            }
+        }, 1000);
+    }
+    render(questionNumber);
+});
+// Function for questions, answers and choices: 
+function render(questionNumber) {
+    createList.innerHTML = "";
+    
+    for (var i = 0; i < questions.length; i++) {
+        var displayQuestion = questions[questionNumber].question;
+        var displayChoices = questions[questionNumber].choices;
+        quizQuestion.textContent = displayQuestion;
+    }
+
+    displayChoices.forEach(function (newEl) {
+        var li = document.createElement("li");
+        li.textContent = newEl;
+        quizQuestion.appendChild(createList);
+        createList.appendChild(li);
+        li.addEventListener("click", (compareAnswer));
+    })
+}
