@@ -182,7 +182,7 @@ function gameOver() {
             localStorage.setItem("allScores", newAllScores);
 
     // Gets you to the high score board. 
-            window.location.replace("./highscores.html");
+            window.location.replace("./highscore.html");
         }
     });
 }
