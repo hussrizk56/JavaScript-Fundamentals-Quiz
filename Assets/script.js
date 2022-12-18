@@ -2,7 +2,7 @@
 var questions = [
     {
         question: "Commonly used data types DO NOT include:",
-        choices: ["Strings", "Booleans", "Alerts", "Numbers"],
+        choices: ["1. Strings", "2. Booleans", "3. Alerts", "4. Numbers"],
         answer: "Alerts"
     },
     {
@@ -12,7 +12,7 @@ var questions = [
     },
     {
         question: "Arrays in JavaScript can be used to store _______.",
-        choices: ["1. Numbers and strings", "2. Other arrays", "3. Booleans", "4. All of the above"],
+        choices: ["1. Numbers and Strings", "2. Other Arrays", "3. Booleans", "4. All of the above"],
         answer: "All of the above"
     },
     {
@@ -61,6 +61,7 @@ startGame.addEventListener("click", function() {
     }
     render(questionNumber);
 });
+
 // Function for questions, answers and choices: 
 function render(questionNumber) {
     createList.innerHTML = "";
@@ -78,4 +79,110 @@ function render(questionNumber) {
         createList.appendChild(li);
         li.addEventListener("click", (compareAnswer));
     })
+}
+
+// Function that confirms if the correct answer was selected. Message will state if correct or incorrect 
+// and provide the right answer. Once all questions are answered the total is tallied and displayed. 
+function compareAnswer(event) {
+    var selection = event.target; 
+    
+    if (selection.matches("li")) {
+        var createDiv = document.createElement("div");
+        createDiv.setAttribute("id", "createDiv");
+
+        if (selection.textContent == questions[questionNumber].answer) {
+            currentScore++;
+            createDiv.textContent = questions[questionNumber].answer + " is correct!";
+
+        } else {
+            startingTime = startingTime - wrongAnswer;
+            createDiv.textContent = "That is incorrect, the answer is: " + questions[questionNumber].answer;
+        }
+    }
+    questionNumber++;
+
+    if (questionNumber >= questions.length) {
+        createDiv.textContent = "Game Over! You correctly answered " + currentScore + "/" + questions.length + " questions";
+        gameOver();
+        
+    } else {
+        render(questionNumber);
+    }
+    quizQuestion.appendChild(createDiv);
+}
+
+// Game over function that clears content and allows to start over. 
+function gameOver() {
+    quizQuestion.innerHTML = "";
+    timeLeft.innerHTML = "";
+    var timeRemaining = 0;
+
+    var createHeading = document.createElement("h1");
+    createHeading.setAttribute("id", "create-heading");
+    createHeading.textContent = "Quiz Completed!";
+
+    quizQuestion.appendChild(createHeading);
+
+    // Displays final score information and time left. 
+    var createParagraph = document.createElement("p");
+    createParagraph.setAttribute("id", "create-paragraph");
+
+    quizQuestion.appendChild(createParagraph);
+
+    if (startingTime >= 0) {
+        timeRemaining = startingTime;
+        clearInterval(timer);
+    }
+
+    createParagraph.textContent = "Final Score: " + timeRemaining;
+
+    //Variables for labeling, set attributes, and submitting for initials.    
+    var createLabel = document.createElement("label");
+    createLabel.setAttribute("id", "create-label");
+    createLabel.textContent = "Enter your initials: ";
+
+    quizQuestion.appendChild(createLabel);
+
+    var createInput = document.createElement("input");
+    createInput.setAttribute("id", "initials");
+    createInput.setAttribute("type", "text");
+    createInput.textContent = "";
+
+    quizQuestion.appendChild(createInput);
+
+    var createSubmitButton = document.createElement("button");
+    createSubmitButton.setAttribute("id", "submit-button");
+    createSubmitButton.setAttribute("type", "submit");
+    createSubmitButton.textContent = "Submit";
+
+    quizQuestion.appendChild(createSubmitButton);
+
+    // Added the event listener to record/respond to the submit button click.
+    createSubmitButton.addEventListener("click", function() {
+        var initials = createInput.value;
+        if(initials === null) {
+            console.log("No initials entered"); 
+        } else {
+                var endScore = {
+                initials: initials,
+                score: timeRemaining
+            }
+            
+    // Used to pull and "destringify" scores from local storage.  
+            var allScores = localStorage.getItem("allScores");
+            if(allScores === null) {
+                allScores = [];
+            } else {
+                allScores = JSON.parse(allScores);
+            }
+    // Pushes scores to local storage and "stringifies" them.  
+            allScores.push(endScore);
+            
+            var newAllScores = JSON.stringify(allScores);
+            localStorage.setItem("allScores", newAllScores);
+
+    // Gets you to the high score board. 
+            window.location.replace("./highscores.html");
+        }
+    });
 }
