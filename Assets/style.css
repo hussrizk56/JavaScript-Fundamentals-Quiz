@@ -34,7 +34,7 @@ a {
     position: absolute;
     top: 20px;
     left: 50px;
-    color: rgb(52, 62, 196);
+    color: rgb(196, 52, 52);
     padding: 5px;
 }
 
@@ -45,7 +45,7 @@ a {
 
 li:hover {
     cursor: pointer;
-    background-color:  rgb(238, 9, 9);
+    background-color:  rgb(0, 0, 0);
 }
 
 li {
@@ -54,24 +54,24 @@ li {
     margin: 5px;
     padding: 5px;
     color: white;
-    background-color: rgb(2, 0, 105);
+    background-color: rgb(196, 52, 52);
     font-size: 90%;   
 }
 
 #back-button {
     font-size: larger;
     color: white;
-    background-color: rgb(2, 0, 105);
+    background-color: rgb(196, 52, 52);
     border-radius: 5px;
 }
 
 #clear-scores {
     font-size: larger;
     color: white;
-    background-color: rgb(2, 0, 105);
+    background-color: rgb(196, 52, 52);
     border-radius: 5px;
 }
 
 #createDiv {
-    color: gray
+    color: rgb(196, 52, 52)
 }

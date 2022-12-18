@@ -14,4 +14,8 @@ For this week's assignment I created a quiz website using JavaScript, CSS, and H
 
 Screenshot:
 
+<div>
+    <img src="Assets/quizscreenshot.jpg" width="500px"/> 
+ </div>
+
 URL:
